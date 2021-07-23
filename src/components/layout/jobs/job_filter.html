@@ -1,0 +1,69 @@
+
+<div class="job-filter-area">
+    <div class="job-filter-select d-flex mb-3">
+        <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownJobType"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Job Type
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownJobType"
+                x-placement="bottom-start">
+                <button class="dropdown-item dropdown-item-JobType"
+                    data-value="Full-time">Full-time</button>
+                <button class="dropdown-item dropdown-item-JobType"
+                    data-value="Contract">Contract</button>
+                <button class="dropdown-item dropdown-item-JobType"
+                    data-value="Part-time">Part-time</button>
+                <button class="dropdown-item dropdown-item-JobType"
+                    data-value="Temporary">Temporary</button>
+                <button class="dropdown-item dropdown-item-JobType"
+                    data-value="Internship">Internship</button>
+                <button class="dropdown-item dropdown-item-JobType" data-value="">Clear</button>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownRemote"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Remote
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownRemote"
+                x-placement="bottom-start">
+                <button class="dropdown-item dropdown-item-Remote" data-value="No Remote">No
+                    Remote</button>
+                <button class="dropdown-item dropdown-item-Remote"
+                    data-value="Completely Remote">Completely Remote</button>
+                <button class="dropdown-item dropdown-item-Remote"
+                    data-value="Temporarily Remote">Temporarily Remote</button>
+                <button class="dropdown-item dropdown-item-Remote" data-value="">Clear</button>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownDate"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Date Posted
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownDate"
+                x-placement="bottom-start">
+                <button class="dropdown-item dropdown-item-Date" data-value="0">Today</button>
+                <button class="dropdown-item dropdown-item-Date" data-value="3">Last 3 days</button>
+                <button class="dropdown-item dropdown-item-Date" data-value="7">Last 7 days</button>
+                <button class="dropdown-item dropdown-item-Date" data-value="14">Last 14 days</button>
+                <button class="dropdown-item dropdown-item-Date" data-value="30">Last 30 days</button>
+                <button class="dropdown-item dropdown-item-Date" data-value="">Clear</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="jobs-view mb-3 text-right">
+        <button class="btn btn-sm btn-light" data-value="list">
+            <i class="fas fa-th-list" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-sm btn-light" data-value="grid">
+            <i class="fas fa-th-large" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-sm btn-light active" data-value="bar">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>

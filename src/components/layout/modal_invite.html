@@ -1,0 +1,49 @@
+{% load static %}
+
+<div class="modal fade" id="inviteUser" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="search-bar">
+                    <form>
+                        <input type="text" name="search" placeholder="Search...">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-body custom-invite-list">
+                <form>
+                    <div class="form-group">
+                        {% if users_for_invite %}
+                           {% for item in users_for_invite %}
+                                <div class="suggestion-usd custom-control custom-checkbox pl-5">
+                                    <input type="checkbox" class="custom-control-input" name="user_id" 
+                                        id="user_id_{{ item.id }}" value="{{ item.id }}">
+                                    <label for="user_id_{{ item.id }}" class="custom-control-label d-flex align-items-center w-100">                                        
+                                        {% if item.avatar %}
+                                            <img class="rounded-circle-35 mCS_img_loaded" src="/media/{{ item.avatar }}">  
+                                        {% else %}
+                                            <img class="rounded-circle-35 mCS_img_loaded" src="/static/images/user.png">
+                                        {% endif %}
+
+                                        <div class="sgt-text text-truncate">
+                                            <h4>{{ item.first_name }} {{ item.last_name }}</h4>
+                                        </div>
+                                    </label>
+                                </div>   
+                            {% endfor %}
+                        {% else %}        
+                            <p>
+                                There is no any user.
+                            </p>
+                        {% endif %}  
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary btn_cancel_invite" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn_modal_invite">Invite</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+
+{% load static %}
+
+<div class="group-bar">
+    <div class="group_topbar">
+        <div class="user-detail d-flex align-items-center">
+            <img src="{{ item.avatar }}" alt="" class="rounded-circle-35 mCS_img_loaded">
+            <div class="user-name">
+                <h3><a href="{% url 'groups:view_group_detail' item.id %}">{{ item.title }}</a></h3>
+            </div>
+        </div>        
+        {% if item.me == '1' %}            
+            <button type="button" data-id="{{ item.id }}" class="btn btn-success float-right btn_invite">Invite</button>
+        {% else %}
+            <button type="button" data-id="{{ item.id }}" class="btn btn-primary float-right btn_group_follow">
+                {{ item.followtxt }}
+            </button>            
+        {% endif %}
+    </div>
+    <div class="group-status-bar">
+        <ul class="group-com">
+            <li>
+                <a href="#"><i class="fas fa-users"></i> {{ item.followers }} Followers</a>
+            </li>
+            <li>
+                <a href="#"><i class="fas fa-edit"></i> {{ item.posts }} Posts</a>
+            </li>
+            <li>
+                <a class="btn_group_like btn_set_like" data-id="{{ item.id }}">
+                    {% if item.liked == '1' %}
+                        <i class="fas fa-heart"></i>
+                    {% else %}
+                        <i class="far fa-heart"></i>
+                    {% endif %}                    
+                    <span class="likes">{{ item.likes }}</span> Like
+                </a>                
+            </li>
+        </ul>
+        <a href="#"><i class="fas fa-eye"></i>Views {{ item.views }}</a>
+    </div>
+</div>

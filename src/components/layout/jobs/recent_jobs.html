@@ -1,0 +1,34 @@
+{% load static %}
+
+<div class="widget widget-jobs">
+    <div class="sd-title">
+        <h3>Recent Jobs</h3>
+    </div>
+    <div class="jobs-list">
+        <div class="jobs-list-inner">
+            {% if jobs %}
+                <div class="job-info">
+                    <div class="job-details">
+                        <h3 class="text-truncate">
+                            <a href="#">
+                                Lorem ipsum dolor sit amet,
+                                consectetur adipiscing elit..
+                            </a>
+                        </h3>
+                        <div class="hr-rate mb-1">
+                            <span>$25/month</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="job-info">
+                    No recent jobs found.
+                </div>
+            {% endif %}
+        </div>
+        <div class="view-more">
+            <a href="#" title="">View More</a>
+        </div>
+    </div>
+</div>

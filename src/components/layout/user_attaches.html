@@ -1,0 +1,32 @@
+{% load static %}
+
+<div class="widget widget-portfolio">
+    <div class="wd-heady">
+        <h3>Gallery</h3>
+        {% if cnt_attachs > 9 %}
+            <a class="" style="float: right;font-size:12px;" href="{% url 'account:attachmentsview' %}">See All <i class="feather-chevron-right"></i></a>
+        {% endif %}
+    </div>
+    <div class="pf-gallery">
+        {% if attachs %} 
+            <ul>                                 
+                {% for item in attachs %}  
+                    <li>                        
+                        {% if item.ext == 'avi' or item.ext == 'mp4' %}                              
+                            <a href="#" title="">
+                                <video src="{{ item.attach }}" controls></video>
+                            </a>        
+                        {% else %}
+                            <a href="#" title="">
+                                <img class="img-fluid" src="{{ item.attach }}" alt="">
+                            </a>                            
+                        {% endif %}
+                    </li> 
+                {% endfor %}
+            </ul>                                   
+        {% else %}                     
+            <p>There are no gallary to show.</p>                                             
+        {% endif %}
+    </div>
+    <!--pf-gallery end-->
+</div>

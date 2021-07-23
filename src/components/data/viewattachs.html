@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+{% load static %}
+
+    <main>
+        <div class="main-section">
+            <div class="container">
+                <div class="main-section-data">
+                    <div class="row">
+                        <div class="col-lg-12 pd-left-none pd-right-none no-pd">
+                            <div class="portfolio-gallery-sec">
+                                <h3>Our Gallery</h3>
+                                <div class="gallery_pf">
+                                    <div class="row wrap_all_attachs">
+                                                                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    
+
+    <!-- Post Media Modal Popup -->
+	<button type="button" class="btn btn-primary btn-gallery-modal d-none" data-toggle="modal"
+        data-target="#galleryModal">Custom
+        post media</button>
+
+    <div class="modal fade" id="galleryModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <img id="post-image-media" class="embed-responsive-item" src="" alt="" style="display: none;" />
+                    </div>
+                </div>
+                <div class="modal-footer bg-dark border-0">
+                    <button type="button" class="btn btn-danger btn_trash_attach btn_modal_attach_delete" data-id="">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var currentPage = 1;
+        var pagenum = 1;
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp','avi','mp4'];
+        var imgExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        var videoExtension = ['avi','mp4'];
+        
+        function get_attachs()
+        {
+            $("#loading").css("display","block");        
+            var data = $("#pagination-form").serialize();
+            $.ajax({
+                url: "{% url 'account:get_attachs' %}?"+data,
+                method: 'GET',            
+                success: function (response) {
+                    
+                    var data = response.results;
+                    $(".post_list").html('');
+                    $("#loading").css("display","none");
+                    
+                    if(data.length>0)
+                    {
+                        for(var i=0;i<data.length;i++)
+                        {
+                           
+                            var html = `
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                                    <div class="gallery_pt">`;
+                                        html
+                                        if ($.inArray(data[i].ext, imgExtension) == -1) {
+                                            html += '<video src="media/'+data[i].attach+'" autoplay controls></video>';
+                                        }
+                                        else
+                                        {
+                                            html += '<img src="media/'+data[i].attach+'" alt="">';
+                                        }
+
+                                    html +=`<div class="gallery-actions">
+                                            <a href="#" title="" class="btn btn-light btn-gallery-view" data-id="${data[i].id}" data-url="/media/${data[i].attach}"><i class="fa fa-eye"></i></a>
+                                            <a href="#" title="" data-id="${data[i].id}" class="btn btn-danger btn_trash_attach"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                            $('.wrap_all_attachs').append(html);
+                        }
+                    }                    
+                }
+            })
+        }
+
+        $(document).ready(function(){
+            get_attachs();
+            $(document).on('click','.btn_trash_attach',function()
+            {            
+                var id = $(this).data('id');
+                if(id)
+                {
+                    $.ajax({
+                        url: "{% url 'blog:delete_attach' %}",
+                        method: 'GET', 
+                        type: 'json',
+                        data: {id:id},           
+                        success: function (response) {
+                            if(response)
+                            {
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    return false;
+                }
+                
+            });
+        });
+    </script>
+{% endblock %}

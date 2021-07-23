@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+    {% block head %}
+    <title>Home | Flicker Face</title>
+    {% endblock %}
+
+    <main>
+        <div class="main-section">
+            <div class="container">
+                <div class="main-section-data">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 pd-left-none no-pd">                            
+                            <div class="main-left-sidebar left-sidebar-fixed no-margin">
+                                {% include "layout/profile_info.html" %}
+                                {% include "layout/user_nav.html" %}
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-8 no-pd">
+                            {% include "layout/group/group_searchbox.html" %}
+                            <!--search-sec end-->
+                            <div class="main-ws-sec">
+                                <div class="group-bar">
+                                    <div class="group-post-image">
+                                        <img src="{{ cur_group.back }}" alt="" />
+                                    </div>
+                                    <div class="group_topbar">
+                                        <div class="user-detail d-flex align-items-center">
+                                            <img src="{{ cur_group.avatar }}" alt="" class="rounded-circle-50 mCS_img_loaded">
+                                            <div class="user-name">
+                                                <h3>{{ cur_group.username }}</h3>
+                                            </div>
+                                        </div>                        
+                                        
+                                        {% if cur_group.me == '1' %}                            
+                                            <button type="button" data-id="{{ cur_group.id }}" class="btn btn-success float-right btn_invite">Invite</button>
+                                        {% else %}
+                                            {% if cur_group.followed == '1' %}
+                                                <button type="button" data-id="{{ cur_group.id }}" class="btn btn-primary float-right btn_page_follow">
+                                                    Unfollow
+                                                </button> 
+                                            {% else %}      
+                                                <button type="button" data-id="{{ cur_group.id }}" class="btn btn-primary float-right btn_page_follow">
+                                                    Follow
+                                                </button>  
+                                            {% endif %}                                           
+                                        {% endif %}
+                                    </div>
+                                    <div class="group-status-bar">
+                                        <ul class="group-com">
+                                            <li>
+                                                <a href="#"><i class="fas fa-users"></i> {{ cur_group.followers }} Followers</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fas fa-edit"></i> {{ cur_group.posts }} Posts</a>
+                                            </li>
+                                            <li>
+                                                <a class="btn_page_like btn_set_like" data-id="{{ cur_group.id }}">
+                                                    {% if cur_group.liked == '1' %}
+                                                        <i class="fas fa-heart"></i>
+                                                    {% else %}
+                                                        <i class="far fa-heart"></i>
+                                                    {% endif %}                    
+                                                    <span class="likes">{{ cur_group.likes }}</span> Like
+                                                </a>                
+                                            </li>
+                                        </ul>
+                                        <a href="#"><i class="fas fa-eye"></i>Views {{ cur_group.views }}</a>
+                                    </div>
+                                </div>
+                                
+                                {% if cur_group.me == '1' %}                   
+                                    {% include "layout/blog/blog_create_form.html" %}
+                                {% endif %}
+
+                                <div class="posts-section">
+                                                                
+                                </div>
+                                <div class="text-center" style="display: none;">
+                                    <form action="" id="pagination-form" method="get">                    
+                                        <ul id="pagination-150" class="Pagination">
+                                            <li data-link="1" class="Pagination-item">
+                                                <button type="button" class="btn-start btn_pagination_item Pagination-link">
+                                                <span>
+                                                    <i class="fas fa-step-backward"></i>
+                                                </span>
+                                                </button>
+                                            </li>
+                                            <li data-link="prev_page" class="Pagination-item">
+                                                <button type="button" class="btn-prev btn_pagination_item paginate_button Pagination-link">
+                                                <span>
+                                                    <i class="fas fa-caret-left"></i>
+                                                </span>
+                                                </button>
+                                            </li>
+                                            
+                                            
+                                            <li class="Pagination-item">
+                                                <button type="button" class="btn-current-page btn-first btn_pagination_item number Pagination-link is-active"></button> 
+                                            </li>
+                                            
+                                            <li data-link="next_page" class="Pagination-item">
+                                                <button type="button" class="btn-next btn_pagination_item Pagination-link">
+                                                <span>
+                                                    <i class="fas fa-caret-right"></i>
+                                                </span>
+                                                </button>
+                                            </li>
+                                            <li data-link="last_page" class="Pagination-item">
+                                                <button type="button" class="btn-end btn_pagination_item Pagination-link">
+                                                <span>
+                                                    <i class="fas fa-step-forward"></i>
+                                                </span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                        <input type="hidden" name="currentPage" id="currentPage">     
+                                        <input type="hidden" name="where" value="">    
+                                        <input type="hidden" name="user_id" value="">   
+                                        <input type="hidden" class="need_get_post" value="1">  
+                                        <input type="hidden" name="group_id" value="{{ cur_group.id }}">          
+                                    </form>
+                                </div> 
+                            </div>
+
+                        </div>
+                        <div class="col-lg-3 pd-right-none no-pd">
+                            <div class="right-sidebar">                
+                                {% include "layout/user_list.html" %}                          
+                            </div>
+                            <!--right-sidebar end-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+
+{% include "layout/editmodal.html" %}
+{% include "layout/modal_gif.html" %}
+
+
+{% endblock %}

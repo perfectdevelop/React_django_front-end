@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+    {% block head %}
+    <title>Home | Flicker Face</title>
+    {% endblock %}
+    <main>
+        <div class="main-section">
+            <div class="container">
+                <div class="main-section-data">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 pd-left-none no-pd">
+                            <div class="main-left-sidebar left-sidebar-fixed no-margin">
+                                {% include "layout/profile_info.html" %}
+                                {% include "layout/user_nav.html" %}
+                            </div>
+                            
+                        </div>
+                        <div class="col-lg-6 col-md-8 no-pd">
+                            <div class="main-ws-sec">
+                                {% include "layout/blog/blog_create_form.html" %}
+                                <!--post-topbar end-->
+                                <div class="posts-section">
+                                        
+                                </div>
+                                <div class="text-center" style="display: none;">
+                                    <form action="" id="pagination-form" method="get">                    
+                                        <ul id="pagination-150" class="Pagination">
+                                            <li data-link="1" class="Pagination-item">
+                                                <button type="button" class="btn-start btn_pagination_item Pagination-link">
+                                                <span>
+                                                    <i class="fas fa-step-backward"></i>
+                                                </span>
+                                                </button>
+                                            </li>
+                                            <li data-link="prev_page" class="Pagination-item">
+                                                <button type="button" class="btn-prev btn_pagination_item paginate_button Pagination-link">
+                                                <span>
+                                                    <i class="fas fa-caret-left"></i>
+                                                </span>
+                                                </button>
+                                            </li>
+                                            
+                                            
+                                            <li class="Pagination-item">
+                                                <button type="button" class="btn-current-page btn-first btn_pagination_item number Pagination-link is-active"></button> 
+                                            </li>
+                                            
+                                            <li data-link="next_page" class="Pagination-item">
+                                                <button type="button" class="btn-next btn_pagination_item Pagination-link">
+                                                <span>
+                                                    <i class="fas fa-caret-right"></i>
+                                                </span>
+                                                </button>
+                                            </li>
+                                            <li data-link="last_page" class="Pagination-item">
+                                                <button type="button" class="btn-end btn_pagination_item Pagination-link">
+                                                <span>
+                                                    <i class="fas fa-step-forward"></i>
+                                                </span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                        <input type="hidden" name="currentPage" id="currentPage">     
+                                        <input type="hidden" name="where" value="dashboardpage">    
+                                        <input type="hidden" name="user_id" value="">   
+                                        <input type="hidden" class="need_get_post" value="1">  
+                                        <input type="hidden" name="page_id" value="">          
+                                    </form>
+                                </div> 
+                                <!--posts-section end-->
+                            </div>
+                            <!--main-ws-sec end-->
+                        </div>
+                        <div class="col-lg-3 pd-right-none no-pd">
+                            <div class="right-sidebar right-sidebar-fixed">                                
+                                {% include "layout/user_list.html" %}
+                                {% include "layout/user_attaches.html" %}                
+                            </div>
+                            <!--right-sidebar end-->
+                        </div>        
+                    </div>                       
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include "layout/editmodal.html" %}
+    {% include "layout/modal_gif.html" %}
+    
+
+{% endblock %}

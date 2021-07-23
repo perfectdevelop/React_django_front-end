@@ -1,0 +1,32 @@
+
+{% load static %}
+<div class="suggestions full-width">
+    <div class="sd-title">
+        <h3>Following</h3>
+    </div>
+    <!--sd-title end-->
+    <div class="suggestions-list">
+        <div class="suggestions-inner">
+            {% if followingusers %}
+                {% for item in followingusers %}
+                    <div class="suggestion-usd">
+                        <img src="{{ item.avatar }}" alt="">
+                        <div class="sgt-text">
+                            <div class="text-truncate">
+                                <a class="text-blue" href="{% url 'account:view_user_profile' item.username %}">{{ item.firstname }} {{ item.lastname }}</a>
+                            </div>                            
+                        </div>
+                    </div>       
+                {% endfor %}
+            {% else %}
+                <div class="text-center text-dark">
+                    <p class="mt-2">You are not following anyone!.</p>
+                </div>
+            {% endif %}    
+        </div>
+        <div class="view-more">
+            <a href="#" title="">View More</a>
+        </div>
+    </div>
+    <!--suggestions-list end-->
+</div>

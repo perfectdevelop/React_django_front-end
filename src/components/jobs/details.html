@@ -1,0 +1,140 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+    {% block head %}
+    <title>Home | Flicker Face</title>
+    {% endblock %}
+
+    <main>
+        <div class="main-section">
+            <div class="container">
+                <div class="main-section-data">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 pd-left-none no-pd">                            
+                            <div class="main-left-sidebar left-sidebar-fixed no-margin">
+                                {% include "layout/profile_info.html" %}
+                                {% include "layout/user_nav.html" %}
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-8 no-pd">
+                            {% include "layout/jobs/job_searchbox.html" %}
+                            <!--search-sec end-->
+                            <div class="main-ws-sec">
+                                <div class="posts-bar">
+                                    <div class="post-bar bgclr">
+                                        <img src="http://flickerface.com/media/avatar/Logo.png" alt="" />
+                                        <div class="job-list-item">
+                                            <h3 class="font-weight-bold mb-3">
+                                                {{ job.title }}
+                                            </h3>
+                                        </div>
+                                        <div class="bg-light py-3 mb-3 rounded border">
+                                            <div class="row">
+                                                {% if job.jobtype %}
+                                                    <div class="col-lg-4 col-sm-6 form-group">
+                                                        <label class="d-block mb-2 font-weight-bold">Type</label>
+                                                        {{ job.jobtype }}
+                                                    </div>
+                                                {% endif %}
+                                                {% if job.remote %}                                    
+                                                    <div class="col-lg-4 col-sm-6 form-group">
+                                                        <label class="d-block mb-2 font-weight-bold">Remote</label>
+                                                        {{ job.remote }}
+                                                    </div>
+                                                {% endif %}
+                                                
+                                                <div class="col-lg-4 col-sm-6 form-group">
+                                                    <label class="d-block mb-2 font-weight-bold">Posted on</label>
+                                                    {{ job.created_at }}
+                                                </div>
+
+                                                {% if job.salary %}                                    
+                                                    <div class="col-lg-4 col-sm-6 form-group">
+                                                        <label class="d-block mb-2 font-weight-bold">Salary</label>
+                                                        <div class="hr-rate"><span> ${{ job.salary }}/{{ job.period }}</span></div>
+                                                    </div>
+                                                {% endif %}
+
+                                                
+                                                <div class="col-lg-4 col-sm-6 form-group">
+                                                    <label class="d-block mb-2 font-weight-bold">Posted by </label>
+                                                    {{ job.postedby }}
+                                                </div>
+                                                
+                                                {% if job.travel %}                                    
+                                                    <div class="col-lg-4 col-sm-6 form-group">
+                                                        <label class="d-block mb-2 font-weight-bold">Travel
+                                                            required</label>
+                                                        {{ job.travel }}
+                                                    </div>
+                                                {% endif %}
+                                                
+                                                {% if job.client %}                                    
+                                                    <div class="col-lg-4 col-sm-6 form-group">
+                                                        <label
+                                                            class="d-block mb-2 font-weight-bold">Client/Recruiter</label>
+                                                            {{ job.client }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="row no-gutters mb-4">
+                                            <div class="col-12 text-right">
+                                                <div class="cadidatesbtn">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-toggle="modal"
+                                                        data-target="#jobApplyModal">Apply</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-weight-bold mb-3">Job Description</h3>
+                                            <textarea style="background-color: transparent;border:none;box-shadow:none;outline:none;font-family:Arial;line-height:25px;width: 100%;" readonly name="" id="job_description_publish">{{ job.description }}</textarea>                          
+                                        </div>
+                                        <div class="bg-light py-3 my-3 rounded border">
+                                            <div class="row">
+                                                <div class="col-12 form-group">
+                                                    <label class="mb-2 font-weight-bold">Benefits</label>
+                                                    {{ job.benefits }}
+                                                </div>
+                                                <div class="col-12 form-group">
+                                                    <label class="mb-2 font-weight-bold">Work authorization</label>
+                                                    {{ job.workauth }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row no-gutters">
+                                            <div class="col-12 text-right">
+                                                <div class="cadidatesbtn">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-toggle="modal"
+                                                        data-target="#jobApplyModal">Apply</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 pd-right-none no-pd">
+                            <div class="right-sidebar">                
+                                {% include "layout/jobs/recent_jobs.html" %}                       
+                            </div>
+                            <!--right-sidebar end-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+
+{% include "layout/editmodal.html" %}
+{% include "layout/modal_gif.html" %}
+
+
+{% endblock %}

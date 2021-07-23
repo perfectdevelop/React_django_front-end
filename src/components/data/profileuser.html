@@ -1,0 +1,1144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+    <section class="cover-sec">
+        <div class="embed-responsive">
+            <img class="embed-responsive-item" src="{{ curuser.back }}" alt="" />
+        </div>
+        {% if curuser.me == '1' %}
+            <div class="add-pic-box">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12">
+                            <input type="file" id="cover-file" name="cover-file" accept=".jpg, .jpeg, .png, .gif" />
+                            <label for="cover-file"><i class="fa fa-pencil"></i>&nbsp; Change Cover</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+    <main>
+        <div class="main-section">
+            <div class="container">
+                <div class="main-section-data">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="main-left-sidebar">
+                                <div class="user_profile">
+                                    <div class="user-pro-img">
+                                        <img src="{{ curuser.avatar }}" alt="">
+                                        {% if curuser.me == '1' %}
+                                            <div class="add-dp" id="OpenImgUpload">
+                                                <input type="file" id="editUserAvatar" name="file-attachment" accept=".jpg, .jpeg, .png, .gif">
+                                                <label for="editUserAvatar"><i class="fas fa-camera"></i>
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <h1 class="font-weight-bold">{{ curuser.firstname }} {{ curuser.lastname }}</h1>
+                                    <p>{{ curuser.location }}</p>
+                                    <hr />
+                                    <div class="user_pro_status">
+                                        <ul class="flw-status">
+                                            <li>
+                                                <span>
+                                                    {% if curuser.me == '1' %}
+                                                        <a href="{% url 'account:viewconnections' 'following' %}" class="profile_user_avatar_new_follow_item">Following</a>
+                                                    {% else %}
+                                                        <a href="#" class="profile_user_avatar_new_follow_item">Following</a>
+                                                    {% endif %}
+                                                </span>
+                                                <b>
+                                                    {% if curuser.following %}
+                                                        {{ curuser.following }}
+                                                    {% else %}
+                                                        0
+                                                    {% endif %}
+                                                </b>
+                                            </li>
+                                            <li>
+                                                <span>
+                                                    {% if curuser.me == '1' %}
+                                                        <a href="{% url 'account:viewconnections' 'followers' %}" class="profile_user_avatar_new_follow_item">Followers</a>
+                                                    {% else %}
+                                                        <a href="#" class="profile_user_avatar_new_follow_item">Followers</a>
+                                                    {% endif %}
+                                                </span>
+                                                
+                                                <b>
+                                                    {% if curuser.followers %}
+                                                        {{ curuser.followers }}
+                                                    {% else %}
+                                                        0
+                                                    {% endif %}
+                                                </b>
+                                            </li>
+                                        </ul>                                        
+                                    </div>
+                                    <div class="text-center">
+                                        <button class="btn_close_account" data-toggle="modal" data-target="#closeModal">Close account</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="main-ws-sec">
+                                <div class="uc-tabs-content current animated fadeIn">
+                                    <ul class="nav nav-tabs nav-fill border bg-white" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="tab_user_profile nav-link py-3 active" data-tab="post" id="post-tab" data-toggle="tab"
+                                                href="#post" role="tab" aria-controls="post"
+                                                aria-selected="true">Posts</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="tab_user_profile nav-link py-3" data-tab="about" id="about-tab" data-toggle="tab" href="#about"
+                                                role="tab" aria-controls="about" aria-selected="false">About</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="tab_user_profile nav-link py-3" data-tab="basic-info" id="basic-info-tab" data-toggle="tab"
+                                                href="#basic-info" role="tab" aria-controls="basic-info"
+                                                aria-selected="false">Basic Info</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="tab_user_profile nav-link py-3" data-tab="education" id="education-tab" data-toggle="tab"
+                                                href="#education" role="tab" aria-controls="education"
+                                                aria-selected="false">Education</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="tab_user_profile nav-link py-3" data-tab="experience" id="experience-tab" data-toggle="tab"
+                                                href="#experience" role="tab" aria-controls="experience"
+                                                aria-selected="false">Experience</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane tab_pane_user_profile fade show active" id="post" role="tabpanel"
+                                            aria-labelledby="post-tab">
+                                            <div class="posts-section">
+                                               
+                                            </div>
+                                            <div class="text-center" style="display: none;">
+                                                <form action="" id="pagination-form" method="get">                    
+                                                    <ul id="pagination-150" class="Pagination">
+                                                        <li data-link="1" class="Pagination-item">
+                                                            <button type="button" class="btn-start btn_pagination_item Pagination-link">
+                                                            <span>
+                                                                <i class="fas fa-step-backward"></i>
+                                                            </span>
+                                                            </button>
+                                                        </li>
+                                                        <li data-link="prev_page" class="Pagination-item">
+                                                            <button type="button" class="btn-prev btn_pagination_item paginate_button Pagination-link">
+                                                            <span>
+                                                                <i class="fas fa-caret-left"></i>
+                                                            </span>
+                                                            </button>
+                                                        </li>
+                                                        
+                                                        
+                                                        <li class="Pagination-item">
+                                                            <button type="button" class="btn-current-page btn-first btn_pagination_item number Pagination-link is-active"></button> 
+                                                        </li>
+                                                        
+                                                        <li data-link="next_page" class="Pagination-item">
+                                                            <button type="button" class="btn-next btn_pagination_item Pagination-link">
+                                                            <span>
+                                                                <i class="fas fa-caret-right"></i>
+                                                            </span>
+                                                            </button>
+                                                        </li>
+                                                        <li data-link="last_page" class="Pagination-item">
+                                                            <button type="button" class="btn-end btn_pagination_item Pagination-link">
+                                                            <span>
+                                                                <i class="fas fa-step-forward"></i>
+                                                            </span>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                    <input type="hidden" name="currentPage" id="currentPage">                                                       
+                                                    <input type="hidden" class="need_get_post" value="1">  
+                                                    <input type="hidden" name="page_id" value="">   
+                                                    <input type="hidden" name="where" value="{{ curuser.id }}">   
+                                                    <input type="hidden" name="user_id" value="{{ curuser.id }}">          
+                                                </form>
+                                            </div> 
+                                        </div>
+                                        <div class="tab-pane tab_pane_user_profile fade" id="about" role="tabpanel"
+                                            aria-labelledby="about-tab">
+                                            <div class="user-profile-ov">
+                                                <h3 class="heading-with-action">
+                                                    <span class="overview-open">About</span>
+                                                    {% if curuser.me == '1' %}
+                                                    <span class="title-action"><a href="#" data-toggle="modal"
+                                                            data-target="#aboutModal" class="overview-open"><i
+                                                                class="fa fa-pencil"></i></a></span>
+                                                    {% endif %} 
+                                                </h3>
+                                                <p>
+                                                    {{ curuser.aboutme }}
+                                                </p>
+                                            </div>
+                                            <div class="user-profile-ov">
+                                                <h3 class="heading-with-action">
+                                                    <span class="overview-open">Social Profiles</span>
+                                                    {% if curuser.me == '1' %}
+                                                        <span class="title-action">
+                                                        <a href="#" data-toggle="modal"
+                                                            data-target="#socialLinksModal" class="overview-open"><i
+                                                                class="fa fa-pencil"></i></a></span>
+                                                    {% endif %}
+                                                </h3>
+                                                <div class="social-profile-links">
+                                                    <div class="input-group form-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <svg viewBox="0 0 24 24" width="24" height="24"
+                                                                    stroke="#e4405f" stroke-width="2" fill="none"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="css-i6dzq1">
+                                                                    <rect x="2" y="2" width="20" height="20" rx="5"
+                                                                        ry="5"></rect>
+                                                                    <path
+                                                                        d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z">
+                                                                    </path>
+                                                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5">
+                                                                    </line>
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-control">
+                                                            {% if curuser.linkInstagram %}
+                                                                {{ curuser.linkInstagram }}
+                                                            {% else %}
+                                                                Not added yet
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group form-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <svg viewBox="0 0 24 24" width="24" height="24"
+                                                                    stroke="#3b5999" stroke-width="2" fill="none"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="css-i6dzq1">
+                                                                    <path
+                                                                        d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
+                                                                    </path>
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-control">
+                                                            {% if curuser.linkFacebook %}
+                                                                {{ curuser.linkFacebook }}
+                                                            {% else %}
+                                                                Not added yet
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group form-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <svg viewBox="0 0 24 24" width="24" height="24"
+                                                                    stroke="#55acee" stroke-width="2" fill="none"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="css-i6dzq1">
+                                                                    <path
+                                                                        d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                                                    </path>
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-control">
+                                                            {% if curuser.linkTwitter %}
+                                                                {{ curuser.linkTwitter }}
+                                                            {% else %}
+                                                                Not added yet
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group form-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <svg viewBox="0 0 24 24" width="24" height="24"
+                                                                    stroke="#cd201f" stroke-width="2" fill="none"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="css-i6dzq1">
+                                                                    <path
+                                                                        d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z">
+                                                                    </path>
+                                                                    <polygon
+                                                                        points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02">
+                                                                    </polygon>
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-control">
+                                                            {% if curuser.linkYoutube %}
+                                                                {{ curuser.linkYoutube }}
+                                                            {% else %}
+                                                                Not added yet
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group form-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <svg viewBox="0 0 24 24" width="24" height="24"
+                                                                    stroke="#131418" stroke-width="2" fill="none"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="css-i6dzq1">
+                                                                    <path
+                                                                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                                                    </path>
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-control">
+                                                            {% if curuser.linkGithub %}
+                                                                {{ curuser.linkGithub }}
+                                                            {% else %}
+                                                                Not added yet
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane tab_pane_user_profile fade" id="basic-info" role="tabpanel"
+                                            aria-labelledby="basic-info">
+                                            <div class="user-profile-ov">
+                                                <h3 class="heading-with-action">
+                                                    <span class="overview-open">Basic Information</span>
+                                                    {% if curuser.me == '1' %}
+                                                    <span class="title-action"><a href="#" data-toggle="modal"
+                                                            data-target="#basicInfoModal" class="overview-open"><i
+                                                                class="fa fa-pencil"></i></a></span>
+                                                    {% endif %}
+                                                </h3>
+                                                <div class="row user-basic-info">
+                                                    <div class="col-md-6 form-group">
+                                                        <h4 class="mb-0">First Name</h4>
+                                                        <p>{{ curuser.firstname }}</p>
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <h4 class="mb-0">Last Name</h4>
+                                                        <p>{{ curuser.lastname }}</p>
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <h4 class="mb-0">Email</h4>
+                                                        <p>
+                                                            {% if curuser.public_email == '1' %}
+                                                                {% if curuser.email %}
+                                                                    <span class="text-blue nav_user_content">{{ curuser.email }}</span>
+                                                                {% else %}
+                                                                    <span>Not provided.</span>
+                                                                {% endif%}
+                                                            {% else %}
+                                                                <span>
+                                                                    <i class="fas fa-lock"></i> Locked
+                                                                </span>
+                                                            {% endif %}       
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <h4 class="mb-0">Phone No.</h4>
+                                                        <p>
+                                                            {% if curuser.public_phone == '1' %}
+                                                                {% if curuser.phone %}
+                                                                    <span class="text-blue nav_user_content">{{ curuser.phone_code }} {{ curuser.phone }}</span>
+                                                                {% else %}
+                                                                    <span>Not provided.</span>
+                                                                {% endif%}
+                                                            {% else %}
+                                                                <span>
+                                                                    <i class="fas fa-lock"></i> Locked
+                                                                </span>
+                                                            {% endif %}           
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <h4 class="mb-0">Gender</h4>
+                                                        <p>
+                                                            {{ curuser.gender }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <h4 class="mb-0">Date of Birth</h4>
+                                                        <p>
+                                                            {% if curuser.public_birth == '1' %}
+                                                                {% if curuser.birth == "//" %}
+                                                                    <span>Not provided.</span>
+                                                                {% else %}
+                                                                    <span class="text-blue nav_user_content">{{ curuser.birth }}</span>
+                                                                {% endif%}                                                    
+                                                            {% else %}    
+                                                                <span>
+                                                                    <i class="fas fa-lock"></i> Locked
+                                                                </span>
+                                                            {% endif %}
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <h4 class="mb-0">Current job title</h4>
+                                                        <p>
+                                                            {% if curuser.jobtitle %}
+                                                                <span class="text-blue nav_user_content">{{ curuser.jobtitle }}</span>
+                                                            {% else %}
+                                                                <span>Not provided.</span>
+                                                            {% endif%}      
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <h4 class="mb-0">Current location</h4>
+                                                        <p>
+                                                            {% if curuser.location %}
+                                                                <span class="text-blue nav_user_content">{{ curuser.location }}</span>
+                                                            {% else %}
+                                                                <span>Not provided.</span>
+                                                            {% endif%} 
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane tab_pane_user_profile fade" id="education" role="tabpanel"
+                                            aria-labelledby="education">
+                                            <div class="user-profile-ov">
+                                                <h3 class="heading-with-action">
+                                                    <span class="overview-open">Education</span>
+                                                    {% if curuser.me == '1' %}
+                                                        <span class="title-action"><a href="#" data-toggle="modal"
+                                                            data-target="#educationModal" class="overview-open"><i
+                                                                class="fa fa-plus-square"></i></a></span>
+                                                    {% endif %}
+                                                </h3>
+                                                {% if educations %}                                                    
+                                                    {% for item in educations %}
+                                                        <div class="user-profile-item">
+                                                            <h4 class="heading-with-action">
+                                                                <span class="overview-open education_school_{{ item.id }}">{{ item.school }}</span>
+                                                                {% if curuser.me == '1' %}
+                                                                    <span class="title-action">
+                                                                        <a href="#" data-id="{{ item.id }}" data-toggle="modal"
+                                                                            data-target="#educationModal"
+                                                                            class="overview-open btn_edit_education"><i
+                                                                                class="fa fa-pencil"></i></a>
+                                                                        <a href="#" data-id="{{ item.id }}" class="btn_delete_education overview-open">
+                                                                            <i class="fa fa-times"></i>
+                                                                        </a>
+                                                                    </span>
+                                                                {% endif %}
+                                                            </h4>
+                                                            <span class="education_degree_{{ item.id }}">{{ item.degree }}</span>
+                                                            <p><span class="education_start_{{ item.id }}">{{ item.date_start }}</span> - <span class="education_end_{{ item.id }}">{{ item.date_end }}</span></p>
+                                                        </div>
+                                                    {% endfor %}   
+                                                {% else %}
+                                                    <div class="user-profile-item">
+                                                        <div class="text-center">
+                                                            <p class="mt-2">
+                                                                There is no any data.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane tab_pane_user_profile fade" id="experience" role="tabpanel"
+                                            aria-labelledby="experience-tab">
+                                            <div class="user-profile-ov st2">
+                                                <h3 class="heading-with-action">
+                                                    <span class="overview-open">Experience</span>
+                                                    {% if curuser.me == '1' %}
+                                                        <span class="title-action"><a href="#" data-toggle="modal"
+                                                            data-target="#experienceModal" class="overview-open"><i
+                                                                class="fa fa-plus-square"></i></a></span>
+                                                    {% endif %}
+                                                </h3>
+                                                {% if experiences %}
+                                                    {% for item in experiences %}
+                                                        <div class="user-profile-item">
+                                                            <h4 class="heading-with-action">
+                                                                <span class="overview-open exp_company_{{ item.id }}">{{ item.company }}</span>
+                                                                {% if curuser.me == '1' %}
+                                                                    <span class="title-action"><a href="#" data-id="{{ item.id }}" data-toggle="modal"
+                                                                            data-target="#experienceModal"
+                                                                            class="overview-open btn_edit_experiences"><i
+                                                                                class="fa fa-pencil"></i></a>
+                                                                        <a href="#" data-id="{{ item.id }}" class="overview-open btn_delete_experience"><i
+                                                                                class="fa fa-times"></i></a>
+                                                                    </span>
+                                                                {% endif %}
+                                                            </h4>
+                                                            <span class="exp_position_{{ item.id }}">{{ item.position }}</span>
+                                                            <p class="date mb-0 mt-1"><span class="exp_start_{{ item.id }}">{{ item.date_start }}</span> - <span class="exp_end_{{ item.id }}">{{ item.date_end }}</span></p>
+                                                            <p class="exp_resp_{{ item.id }}">{{ item.responsibilities }}</p>
+                                                        </div>
+                                                    {% endfor %}   
+                                                {% else %}
+                                                    <div class="user-profile-item">
+                                                        <div class="text-center">
+                                                            <p class="mt-2">
+                                                                There is no any data.
+                                                            </p>
+                                                        </div>
+                                                    </div>                                                    
+                                                {% endif %}  
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="right-sidebar">
+                                {% include "layout/user_list.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Post Modal Popup -->
+		<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+				<div class="modal-content bg-transparent border-0">
+					<div class="modal-body">
+						<div class="post-project-fields">
+							<form>
+								<div class="row">
+									<div class="col-lg-12">
+										<h5 class="mb-3 font-weight-bold">Share and update</h5>
+									</div>
+									<div class="col-lg-12">
+										<textarea name="description" placeholder="Write your thoughts..."></textarea>
+									</div>
+									<div class="col-lg-12">
+										<div class="inp-field d-flex align-items-center">
+											<select class="mb-0 mr-2 custom-select">
+												<option>Post visible to</option>
+												<option>Public</option>
+												<option>My Followers only</option>
+											</select>
+											<label type="button" class="btn btn-light" title="Add Image">
+												<input type="file" hidden />
+												<i class="fa fa-image"></i>
+											</label>
+											<button type="button" class="btn btn-light" title="Add Smile">
+												<i class="fa fa-smile"></i>
+											</button>
+											<button type="button" class="btn btn-light" title="Add Gif">
+												<i class="fa fa-icons"></i>
+											</button>
+										</div>
+									</div>
+									<div class="col-lg-12">
+										<div class="post-st">
+											<ul>
+												<li>
+													<button type="submit" class="btn btn-primary">Save</button>
+												</li>
+												<li>
+													<button type="button" data-dismiss="modal"
+														class="btn btn-secondary">Cancel</button>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- About Modal Popup -->
+		<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+				<div class="modal-content bg-transparent border-0">
+					<div class="modal-body">
+						<div class="bg-white p-4">
+							<form id="form_aboutMe" method="post">
+                            {% csrf_token %} 
+								<div class="row">
+									<div class="col-lg-12 mb-3 ">
+										<h5 class="mb-2 font-weight-bold">About</h5>
+										<span>Tell about yourself in two sentences.</span>
+									</div>
+									<div class="col-lg-12 form-group">
+										<textarea rows="5" class="form-control aboutme" name="aboutme">{{ curuser.aboutme }}</textarea>
+									</div>
+									<div class="col-lg-12">
+										<div class="post-st">
+											<ul>
+												<li>
+													<button class="btn btn-primary" id="btn_store_aboutme" type="button">Save</button>
+												</li>
+												<li>
+													<button type="button" data-dismiss="modal"
+														class="btn btn-secondary">Cancel</button>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Social Links Modal Popup -->
+		<div class="modal fade" id="socialLinksModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+				<div class="modal-content bg-transparent border-0">
+					<div class="modal-body">
+						<div class="bg-white p-4">
+							<form action="" id="form_socialLink" method="post">
+                            {% csrf_token %}
+								<div class="row">
+									<div class="col-lg-12 mb-3 ">
+										<h5 class="mb-2 font-weight-bold">Social profiles</h5>
+										<span>Add elsewhere links to your profile.</span>
+									</div>
+									<div class="col-lg-12 input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<svg viewBox="0 0 24 24" width="24" height="24" stroke="#e4405f"
+													stroke-width="2" fill="none" stroke-linecap="round"
+													stroke-linejoin="round" class="css-i6dzq1">
+													<rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+													<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+													<line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+												</svg>
+											</span>
+										</div>
+										<input type="url" class="form-control" name="linkInstagram" placeholder="add instagram link" value="{{ curuser.linkInstagram }}" />
+									</div>
+									<div class="col-lg-12 input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<svg viewBox="0 0 24 24" width="24" height="24" stroke="#3b5999"
+													stroke-width="2" fill="none" stroke-linecap="round"
+													stroke-linejoin="round" class="css-i6dzq1">
+													<path
+														d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
+													</path>
+												</svg>
+											</span>
+										</div>
+										<input type="url" class="form-control" name="linkFacebook" placeholder="add facebook link" value="{{ curuser.linkFacebook }}" />
+									</div>
+									<div class="col-lg-12 input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<svg viewBox="0 0 24 24" width="24" height="24" stroke="#55acee"
+													stroke-width="2" fill="none" stroke-linecap="round"
+													stroke-linejoin="round" class="css-i6dzq1">
+													<path
+														d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+													</path>
+												</svg>
+											</span>
+										</div>
+										<input type="url" class="form-control" name="linkTwitter" placeholder="add twitter link" value="{{ curuser.linkTwitter }}" />
+									</div>
+									<div class="col-lg-12 input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<svg viewBox="0 0 24 24" width="24" height="24" stroke="#cd201f"
+													stroke-width="2" fill="none" stroke-linecap="round"
+													stroke-linejoin="round" class="css-i6dzq1">
+													<path
+														d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z">
+													</path>
+													<polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02">
+													</polygon>
+												</svg>
+											</span>
+										</div>
+										<input type="url" class="form-control" name="linkYoutube" placeholder="add youtube link" value="{{ curuser.linkYoutube }}" />
+									</div>
+									<div class="col-lg-12 input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<svg viewBox="0 0 24 24" width="24" height="24" stroke="#131418"
+													stroke-width="2" fill="none" stroke-linecap="round"
+													stroke-linejoin="round" class="css-i6dzq1">
+													<path
+														d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+													</path>
+												</svg>
+											</span>
+										</div>
+										<input type="url" class="form-control" name="linkGithub" placeholder="add github link" value="{{ curuser.linkGithub }}" />
+									</div>
+
+									<div class="col-lg-12">
+										<div class="post-st">
+											<ul>
+												<li>
+													<button class="btn btn-primary" id="btn_store_social_link" type="button">Save</button>
+												</li>
+												<li>
+													<button type="button" data-dismiss="modal"
+														class="btn btn-secondary">Cancel</button>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Basic Info Modal Popup -->
+		<div class="modal fade" id="basicInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+				<div class="modal-content bg-transparent border-0">
+					<div class="modal-body">
+						<div class="bg-white p-4">
+							<form id="form_basicinfo" method="POST">
+                            {% csrf_token %}
+								<div class="row">
+									<div class="col-lg-12">
+										<h5 class="mb-3 font-weight-bold">Basic Information</h5>
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>First Name</label>
+										<input type="text" name="fname" class="form-control required_form_basicinfo" value="{{ user.first_name }}" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Last Name</label>
+										<input type="text" name="lname" value="{{ user.last_name }}" class="form-control required_form_basicinfo" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Email Address</label>
+										<div
+											class="custom-control custom-checkbox custom-checkbox-inline d-inline ml-2">
+                                            <input type="checkbox" name="public_email" 
+                                            {% if user.public_email == '1' %} checked {% endif %} 
+                                            class="custom-control-input chk_public
+                                            " id="show-email-public">
+											<label class="custom-control-label" for="show-email-public">
+                                                {% if user.public_email == '1' %}
+                                                    Show to public
+                                                {% else %}
+                                                    Hide from public
+                                                {% endif %}      
+                                            </label>
+										</div>
+                                        <input type="email" class="form-control
+                                            {% if user.verified_with == 'e' %} required_form_basicinfo {% endif %} 
+                                        "
+											aria-describedby="emailHelpBlock" name="email" value="{{ user.email }}" />
+										<small id="emailHelpBlock" class="form-text text-muted">
+											We'll never share your email with anyone else.
+										</small>
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Phone number</label>
+										<div
+											class="custom-control custom-checkbox custom-checkbox-inline d-inline ml-2">
+                                            <input type="checkbox" class="chk_public custom-control-input" id="show-phone-public" name="public_phone"
+                                            {% if user.public_phone == '1' %} checked {% endif %}
+                                            />
+											<label class="custom-control-label" for="show-phone-public">
+                                                {% if user.public_phone == '1' %}
+                                                    Show to public
+                                                {% else %}
+                                                    Hide from public
+                                                {% endif %}
+                                            </label>
+										</div>
+                                        <input type="tel" name="phone" value="{{ user.phone }}" class="form-control
+                                        {% if user.verified_with == 'p' %} required_form_basicinfo {% endif %} 
+                                        "
+                                        />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Date of birth</label>
+										<div
+											class="custom-control custom-checkbox custom-checkbox-inline d-inline ml-2">
+                                            <input type="checkbox" name="public_birth" class="chk_public custom-control-input" id="show-birth-public"
+                                            {% if user.public_birth == '1' %} checked {% endif %} 
+                                            />
+											<label class="custom-control-label" for="show-birth-public">
+                                                {% if user.public_birth == '1' %}
+                                                    Show to public
+                                                {% else %}
+                                                    Hide from public
+                                                {% endif %}         
+                                            </label>
+										</div>
+										<div class="d-flex">											
+                                            <select name="birthDay" class="form-control required_form_basicinfo mr-1">
+                                                
+                                            </select>
+                                            <select name="birthMonth" class="form-control required_form_basicinfo mr-1">
+                                                
+                                            </select>
+                                            <select name="birthYear" class="form-control required_form_basicinfo">
+                                                
+                                            </select>
+										</div>
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Gender</label>
+										<div class="pt-2">
+											<div class="custom-control custom-radio custom-control-inline">
+												<input type="radio" class="custom-control-input" id="male" name="gender"
+													value="Male" {% if user.gender == 'Male' %} checked {% endif %} />
+												<label class="custom-control-label" for="male">
+													Male
+												</label>
+											</div>
+											<div class="custom-control custom-radio custom-control-inline">
+												<input type="radio" class="custom-control-input" id="female"
+                                                    name="gender" value="Female"
+                                                    {% if user.gender == 'Female' %} checked {% endif %} 
+                                                    />
+												<label class="custom-control-label" for="female">
+													Female
+												</label>
+											</div>
+											<div class="custom-control custom-radio custom-control-inline">
+												<input type="radio" class="custom-control-input" id="other"
+													name="gender" {% if user.gender == 'Other' %} checked {% endif %} value="Other" />
+												<label class="custom-control-label" for="other">
+													Other
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Current job title</label>
+										<input type="text" name="jobtitle" value="{{ user.jobtitle }}"  class="form-control" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Current location</label>
+                                        <input type="text" name="location" class="form-control required_form_basicinfo"
+                                        value="{{ user.location }}"
+                                        />
+									</div>
+									<div class="col-lg-12">
+										<div class="post-st">
+											<ul>
+												<li>
+													<button type="button" class="btn btn-primary" id="btn_store_basic_profile">Save</button>
+												</li>
+												<li>
+													<button type="button" data-dismiss="modal"
+														class="btn btn-secondary">Cancel</button>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Education Modal Popup -->
+		<div class="modal fade" id="educationModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+				<div class="modal-content bg-transparent border-0">
+					<div class="modal-body">
+						<div class="bg-white p-4">
+							<form action="" id="form_education" method="post">
+                            {% csrf_token %}
+								<div class="row">
+									<div class="col-lg-12 mb-3">
+										<h5 class="mb-2 font-weight-bold">Education Details</h5>
+										<span>Tell about your education.</span>
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>From</label>
+										<input type="date" name="from" class="form-control required_form_basicinfo modal_education_start" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>To</label>
+										<input type="date" name="to" class="form-control required_form_basicinfo modal_education_end" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>School/College/University</label>
+										<input type="text" name="school" class="form-control required_form_basicinfo modal_education_school" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Degree Earned</label>
+										<input type="text" name="degree" class="form-control required_form_basicinfo modal_education_degree" />
+									</div>
+
+									<div class="col-lg-12">
+										<div class="post-st">
+											<ul>
+												<li>
+													<button type="button" class="btn btn-primary" id="btn_store_education">Save</button>
+												</li>
+												<li>
+													<button type="button" data-dismiss="modal"
+														class="btn btn-secondary">Cancel</button>
+												</li>
+											</ul>
+										</div>
+									</div>
+                                </div>
+                                <input type="hidden" value="" class="" name="education_id">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Experience Modal Popup -->
+		<div class="modal fade" id="experienceModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+				<div class="modal-content bg-transparent border-0">
+					<div class="modal-body">
+						<div class="bg-white p-4">
+							<form action="" id="form_experience" method="post">
+                            {% csrf_token %}
+								<div class="row">
+									<div class="col-lg-12 mb-3">
+										<h5 class="mb-2 font-weight-bold">Experience</h5>
+										<span>Tell about your work, job, and other experiences.</span>
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>From</label>
+										<input type="date" name="from" class="form-control required_form_basicinfo modal_exp_start" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>To</label>
+										<input type="date" name="to" class="form-control required_form_basicinfo modal_exp_end" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Company</label>
+										<input type="text" name="company" class="form-control required_form_basicinfo modal_exp_company" />
+									</div>
+									<div class="col-lg-6 form-group">
+										<label>Position</label>
+										<input type="text" name="position" class="form-control required_form_basicinfo modal_exp_position" />
+									</div>
+									<div class="col-lg-12 form-group">
+										<label>Responsibilities</label>
+										<textarea rows="3" name="responsibilities" class="form-control required_form_basicinfo modal_exp_resp"></textarea>
+									</div>
+
+									<div class="col-lg-12">
+										<div class="post-st">
+											<ul>
+												<li>
+													<button type="submit" class="btn btn-primary" id="btn_store_experience">Save</button>
+												</li>
+												<li>
+													<button type="button" data-dismiss="modal"
+														class="btn btn-secondary">Cancel</button>
+												</li>
+											</ul>
+										</div>
+									</div>
+                                </div>
+                                <input type="hidden" value="" class="" name="exp_id">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!-- Close Account Modal Popup -->
+		<div class="modal fade" id="closeModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+				<div class="modal-content bg-transparent border-0">
+					<div class="modal-body">
+						<div class="bg-white p-4">							
+                            <div class="row">
+                                <div class="col-lg-12 mb-3">
+                                    <h5 class="mb-2 font-weight-bold text-red">Account close!</h5>
+                                    <span>Do you really want to close your account?</span>
+                                </div>
+                                
+                                <div class="col-lg-12">
+                                    <div class="post-st">
+                                        <ul>
+                                            <li>
+                                                <button type="submit" class="btn" id="btn_close_account">Confirm</button>
+                                            </li>
+                                            <li>
+                                                <button type="button" data-dismiss="modal"
+                                                    class="btn btn_cancel_account">Cancel</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>                                
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div>
+            <input type="hidden" class="birthDay" value="{{ user.birthDay }}">
+            <input type="hidden" class="birthMonth" value="{{ user.birthMonth }}">
+            <input type="hidden" class="birthYear" value="{{ user.birthYear }}">
+        </div>
+    <script>
+        function init()
+        {
+            if($.cookie('tab'))
+            {               
+                $(".tab_user_profile").removeClass("active");
+                var tab = $.cookie('tab');
+                $("#"+tab+"-tab").addClass("active");
+                $(".tab_pane_user_profile").removeClass("show active");                
+                $("#"+tab).addClass("show active");
+            }
+
+            for (let index = 1; index < 32; index++) {
+                var html=``;
+                var birthDay = $(".birthDay").val();
+                if(birthDay == index)
+                {
+                    html = `
+                        <option selected value="${index}">${index}</option>
+                    `;
+                }
+                else
+                {
+                    html = `
+                        <option value="${index}">${index}</option>
+                    `;
+                }
+                $("select[name='birthDay']").append(html);
+            }
+
+            for (let index = 1; index < 13; index++) {
+                var birthMonth = $(".birthMonth").val();
+                
+                if(birthMonth == index)
+                {
+                    html = `
+                        <option selected value="${index}">${index}</option>
+                    `;
+                }
+                else
+                {
+                    html = `
+                        <option value="${index}">${index}</option>
+                    `;
+                }
+                $("select[name='birthMonth']").append(html);
+            }
+            for (let index = 1940; index < 2020; index++) {
+                var birthYear = $(".birthYear").val();
+                if(birthYear == index)
+                {
+                    html = `
+                        <option selected value="${index}">${index}</option>
+                    `;
+                }
+                else
+                {
+                    html = `
+                        <option value="${index}">${index}</option>
+                    `;
+                }                
+                $("select[name='birthYear']").prepend(html);
+            }
+        }
+        $(document).ready(function(){
+
+            init();
+            $(document).on('change','#editUserAvatar',function(){
+                var file = document.getElementById('editUserAvatar');
+                var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+                var formdata = new FormData;
+                if (file.files[0])
+                {
+                    if ($.inArray(file.files[0]['name'].split('.').pop().toLowerCase(), fileExtension) == -1) {
+                        alert("Only formats are allowed : "+fileExtension.join(', '));
+                        $("#editUserAvatar").val("");
+                        return false;
+                    }
+                    if(file.files[0].size > 500000000)
+                    {
+                        alert("File size should be less than 2Mb.");
+                        return false;
+                    }
+                    formdata.append('attach',file.files[0]);
+                }
+                var token = '{{csrf_token}}';
+                formdata.append('is_store','1');
+                $("#loading").css("display","block");
+                $.ajax({
+                    headers: { "X-CSRFToken": token },
+                    url:"{% url 'account:upload_avatar' %}",
+                    type: 'post',
+                    dataType: 'json',
+                    data: formdata,
+
+                    processData: false,
+                    contentType: false,
+                    success: function(result){                  
+                        location.reload();
+                    }
+                });
+            });
+            
+            $(document).on('change','#cover-file',function(){
+                var file = document.getElementById('cover-file');
+                var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+                var formdata = new FormData;
+                if (file.files[0])
+                {
+                    if ($.inArray(file.files[0]['name'].split('.').pop().toLowerCase(), fileExtension) == -1) {
+                        alert("Only formats are allowed : "+fileExtension.join(', '));
+                        $("#cover-file").val("");
+                        return false;
+                    }
+                    if(file.files[0].size > 500000000)
+                    {
+                        alert("File size should be less than 2Mb.");
+                        return false;
+                    }
+                    formdata.append('attach',file.files[0]);
+                }
+                var token = '{{csrf_token}}';
+                formdata.append('is_cover','1');
+                $("#loading").css("display","block");
+                $.ajax({
+                    headers: { "X-CSRFToken": token },
+                    url:"{% url 'account:upload_avatar' %}",
+                    type: 'post',
+                    dataType: 'json',
+                    data: formdata,
+
+                    processData: false,
+                    contentType: false,
+                    success: function(result){                  
+                        location.reload();
+                    }
+                });
+            });
+            $('.chk_public').change(function() {
+                var elelabel = $(this).parent().find('label');
+                if ($(this).is(":checked") == true) 
+                {                               
+                    elelabel.html("Show to public");
+                } 
+                else 
+                { 
+                    elelabel.html("Hide from public");
+                } 
+
+            });
+        });
+    </script>
+{% endblock %}

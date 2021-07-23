@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+    {% block head %}
+    <title>Home | Flicker Face</title>
+    {% endblock %}
+
+    <main>
+        <div class="main-section">
+            <div class="container">
+                <div class="main-section-data">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 pd-left-none no-pd">                            
+                            <div class="main-left-sidebar left-sidebar-fixed no-margin">
+                                {% include "layout/profile_info.html" %}
+                                {% include "layout/user_nav.html" %}
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-8 no-pd">
+                            {% include "layout/group/group_searchbox.html" %}
+                            <!--search-sec end-->
+                            <div class="main-ws-sec">
+                                <div class="user-tab-sec">
+                                    <div class="tab-feed">                       
+                                        <ul>
+                                            <li data-tab="group-own" class="active animated fadeIn">
+                                                <a href="#" title="">
+                                                    <span>Your own Group</span>
+                                                </a>
+                                            </li>
+                                            <li data-tab="group-follow" class="animated fadeIn">
+                                                <a href="#" title="">
+                                                    <span>Group you follow</span>
+                                                </a>
+                                            </li>
+                                            <li data-tab="group-all" class="animated fadeIn">
+                                                <a href="#" title="">
+                                                    <span>All Groups</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div><!-- tab-feed end-->
+                                </div>
+                                <!--user-tab-sec end-->
+                                <div class="product-feed-tab current animated fadeIn" id="group-own">                    
+                                    
+                                    {% if usergroups %}
+                                        {% for item in usergroups %}
+                                            {% include "layout/group/group_item.html" %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="group-bar">No own groups found!</div>
+                                    {% endif %}
+                                    
+                                                        
+                                </div>
+                                <!--product-feed-tab end-->
+                                <div class="product-feed-tab animated fadeIn" id="group-follow">                    
+                                    {% if followgroups %}
+                                        {% for item in followgroups %}
+                                            {% include "layout/group/group_item.html" %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="group-bar">You are not following any groups yet!</div>
+                                    {% endif %}
+                                </div>
+                                <!--product-feed-tab end-->
+                                <div class="product-feed-tab animated fadeIn" id="group-all">                    
+                                    {% if allgroups %}
+                                        {% for item in allgroups %}
+                                            {% include "layout/group/group_item.html" %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="group-bar">No other groups found!</div>
+                                    {% endif %}
+                                </div>
+                                <!--product-feed-tab end-->
+                            </div>
+                        </div>
+                        <div class="col-lg-3 pd-right-none no-pd">
+                            <div class="right-sidebar">                
+                                {% include "layout/user_list.html" %}                          
+                            </div>
+                            <!--right-sidebar end-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+
+{% include "layout/editmodal.html" %}
+{% include "layout/modal_gif.html" %}
+
+
+{% endblock %}

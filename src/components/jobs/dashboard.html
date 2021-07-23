@@ -1,0 +1,50 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+    {% block head %}
+    <title>Jobs | Flicker Face</title>
+    {% endblock %}
+
+    <main>
+        <div class="main-section">
+            <div class="container">
+                <div class="main-section-data">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 pd-left-none no-pd">                            
+                            <div class="main-left-sidebar left-sidebar-fixed no-margin">
+                                {% include "layout/profile_info.html" %}
+                                {% include "layout/user_nav.html" %}
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-8 no-pd">
+                            {% include "layout/jobs/job_searchbox.html" %}
+                            <!--search-sec end-->
+                            <div class="main-ws-sec">
+                                {% include "layout/jobs/job_filter.html" %}
+
+                                {% include "layout/jobs/job_list.html" %}
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 pd-right-none no-pd">
+                            <div class="right-sidebar">                
+                                {% include "layout/jobs/recent_jobs.html" %}                       
+                            </div>
+                            <!--right-sidebar end-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" class="job_page_which" value="1">
+    </main>
+    
+
+{% include "layout/editmodal.html" %}
+{% include "layout/modal_gif.html" %}
+
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+{% load static %}
+
+    <main>
+        <div class="main-section">
+            <div class="container">
+                <div class="main-section-data">
+                    <div class="row">
+                        <div class="col-lg-8 col-xl-6 pd-left-none pd-right-none no-pd mx-auto">
+                            <div class="uc-tabs-content animated fadeIn current">
+                                <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab"
+                                            href="#following" role="tab" aria-selected="true">Following</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab"
+                                            href="#followers" role="tab" aria-selected="false">Followers</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade active show" id="following" role="tabpanel">
+                                        <div class="suggestions-list bg-white">
+
+                                            
+                                                    
+                                            {% if following %}
+                                                {% for item in following %}                                    
+                                                    <div class="suggestion-usd">                                        
+                                                        {% if item.avatar == '' %} 
+                                                            <img class="rounded-circle-35" src="{% static 'images/user.png' %}">
+                                                        {% else %}
+                                                            <img class="rounded-circle-35" src="{{ item.avatar }}">
+                                                        {% endif %}
+                                                        <div class="sgt-text text-truncate">
+                                                            <h4>
+                                                                <a href="{% url 'account:view_user_profile' item.username %}">{{ item.firstname }} {{ item.lastname }}</a>
+                                                            </h4>
+                                                        </div>
+                                                        <span data-id="{{ item.id }}" class="btn_connection"><i class="fa fa-plus"></i></span>
+                                                    </div>   
+                                                {% endfor %}
+                                            {% else %}
+                                                    <div class="text-center mt-3">
+                                                        <p>There is no any data</p>
+                                                    </div>
+                                            {% endif %}     
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="followers" role="tabpanel">
+                                        <div class="suggestions-list bg-white">
+                                            
+                                            {% if followers %}
+                                                {% for item in followers %}                                    
+                                                    <div class="suggestion-usd">                                       
+                                                        {% if item.avatar == '' %} 
+                                                                <img class="rounded-circle-35" src="{% static 'images/user.png' %}">
+                                                            {% else %}
+                                                                <img class="rounded-circle-35" src="{{ item.avatar }}">
+                                                            {% endif %}
+                                                        <div class="sgt-text text-truncate">
+                                                            <h4>
+                                                                <a href="{% url 'account:view_user_profile' item.username %}">{{ item.firstname }} {{ item.lastname }}</a>
+                                                            </h4>
+                                                        </div>
+                                                    </div>      
+                                                {% endfor %}
+                                            {% else %}
+                                                <div  class="text-center mt-3">
+                                                    <p>There is no any data</p>
+                                                </div>
+                                            {% endif %}   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>      
+               
+
+        $(document).ready(function(){
+            $(document).on('click','.btn_follow_which',function(){
+                $('.btn_follow_which').removeClass("selected_follow");
+                $('.follow_list').removeClass("selected_list");
+                var which = $(this).data('id');
+                $(this).addClass("selected_follow");
+                $("."+which+"_list").addClass("selected_list");
+            });
+            
+        });
+    </script>
+{% endblock %}
