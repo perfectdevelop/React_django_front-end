@@ -4,7 +4,8 @@ import React from "react";
 
 import Login from './components/registration/login';
 import Register from './components/registration/register';
-import Base from './components/base';
+import Dashboard from './components/pages/dashboard';
+import Password_reset_form from "./components/registration/password_reset_form";
 
 const Routes = () => {
     return (
@@ -15,7 +16,8 @@ const Routes = () => {
             <React.Fragment>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
-              <Route exact path="/dashboard" component={Base} />
+              <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/password_reset" component={Password_reset_form} />
             </React.Fragment>
           </Switch>
         </React.Suspense>

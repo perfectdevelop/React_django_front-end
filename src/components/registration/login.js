@@ -1,9 +1,69 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
 
+import AuthService from "../../services/auth.service";
 import loginlogo from '../../assets/images/login-logo.png';
 
-const login = () => {
+const required = (value) => {
+    if (!value) {
+        return (
+            <p className="alert_both alert_txt">Invalid data. Please try again.</p>
+        );
+    }
+};
+
+const Login = (props) => {
+    const form = useRef();
+    const checkBtn = useRef();
+
+    const [userinfo, setUserinfo] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+
+    const onChangeUserinfo = (e) => {
+        const userinfo = e.target.value;
+        setUserinfo(userinfo);
+    };
+
+    const onChangePassword = (e) => {
+        const password = e.target.value;
+        setPassword(password);
+    };
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+
+        setMessage("");
+        setLoading(true);
+
+        form.current.validateAll();
+
+        if (checkBtn.current.context._errors.length === 0) {
+            AuthService.login(userinfo, password).then(
+                () => {
+                    props.history.push("/dashboard");
+                    window.location.reload();
+                },
+                (error) => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+
+                    setLoading(false);
+                    setMessage(resMessage);
+                }
+            );
+        } else {
+            setLoading(false);
+        }
+    };
     return (
         <div>
             <div className="login-bg">
@@ -18,30 +78,38 @@ const login = () => {
                         <div className="col-lg-auto">
                             <div className="login-sidebar bg-white">
                                 <h2 className="font-weight-bold mb-4 text-center text-md-left">Welcome Back</h2>
-                                <form id="form_login" method="POST">
+                                <Form id="form_login" onSubmit={handleLogin} ref={form}>
                                     <div className="form-group">
-                                        <label for="exampleFormControlInput1">Email or Phone</label>
-                                        <input type="text" name="email" className="form-control required" placeholder="Enter registered email or phone" />
+                                        <label htmlFor="exampleFormControlInput1">Email or Phone</label>
+                                        <Input type="text" name="email" className="form-control required" value={userinfo} placeholder="Enter registered email or phone" onChange={onChangeUserinfo} validations={[required]} />
                                         <p className="alert_both alert_txt">Invalid data. Please try again.</p>
                                         <p className="alert_phone alert_txt">Invalid data. Please try again.</p>
                                     </div>
                                     <div className="form-group">
-                                        <label for="exampleFormControlInput1">Password</label>
-                                        <input type="password" name="password" className="form-control required input_login" placeholder="Enter your password"
-                                            aria-describedby="passwordHelpBlock" />
+                                        <label htmlFor="exampleFormControlInput1">Password</label>
+                                        <Input type="password" name="password" className="form-control required input_login" value={password} placeholder="Enter your password"
+                                            aria-describedby="passwordHelpBlock" onChange={onChangePassword} validations={[required]}/>
                                         <p className="alert_passmatch alert_txt">The password dont match.</p>
                                     </div>
                                     <div className="form-group d-flex justify-content-between">
                                         <div className="custom-control custom-checkbox">
                                             <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                                            <label className="custom-control-label" for="customCheck1">Remember me</label>
+                                            <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
                                         </div>
-                                        <a href="/password_reset">Forgot password?</a>
+                                        <Link to="/password_reset">Forgot password?</Link>
                                     </div>
-                                    <button type="button" className="btn btn-primary btn-block btn_login font-weight-bold">Sign
+                                    <button type="submit" className="btn btn-primary btn-block btn_login font-weight-bold">Sign
                                         in</button>
                                     <input type="hidden" value="" name="which" />
-                                </form>
+                                    {message && (
+                                        <div className="form-group">
+                                            <div className="alert alert-danger" role="alert">
+                                                {message}
+                                            </div>
+                                        </div>
+                                    )}
+                                    <CheckButton style={{ display: "none" }} ref={checkBtn} />
+                                </Form>
                                 <div className="text-center text-md-left mt-3">
                                     <span>Don't have an account? <Link to="/register">Join now</Link></span>
                                 </div>
@@ -61,7 +129,7 @@ const login = () => {
     )
 }
 
-export default login
+export default Login
 
     // <script>
     //     function isEmail(email) {
